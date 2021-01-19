@@ -5,6 +5,8 @@ import { ThemeProvider as StyledThemeProvider } from "styled-components";
 // Import services
 import { standard } from "./services/themes";
 
+// TODO: Evening theme, morning theme, stone theme, forest theme
+
 export default function App() {
   const [theme] = useState(standard);
   const [react, setReact] = useState(false);
@@ -35,7 +37,7 @@ const Root = styled.div`
 
   background: linear-gradient(
     -45deg,
-    #ffffff 0 calc(50% + 10px),
+    #e1ebfa 0 calc(50% + 10px),
     ${({ theme }) => theme.surface.react} calc(50%) calc(50%),
     ${({ theme }) => theme.surface.react} calc(50% - 10px) 100%
   );
@@ -63,7 +65,7 @@ const ReactLink = styled(NavLink)`
     -45deg,
     ${({ theme }) => theme.surface.react} 0 calc(50% + 10px),
     ${({ theme }) => theme.surface.react} calc(50%) calc(50%),
-    #61dafb calc(50% - 10px) 100%
+    ${({ theme }) => theme.color.react} calc(50% - 10px) 100%
   );
   background-size: 275% 100%;
   background-position: ${({ active }) => (active ? "0% 50%" : "100% 50%")};
@@ -83,13 +85,16 @@ const ReactLink = styled(NavLink)`
   -o-background-clip: text;
   -o-text-fill-color: transparent;
 `;
+// #10a8c8
+// #cc9933 // goldenrod
+// #976b00 // dark goldenrod
 
 const NodeLink = styled(NavLink)`
   background-image: linear-gradient(
     -45deg,
-    #39874e 0 calc(50% + 10px),
-    #ffffff calc(50%) calc(50%),
-    #ffffff calc(50% - 10px) 100%
+    #cc9933 0 calc(50% + 10px),
+    #d3d3d3 calc(50%) calc(50%),
+    #d3d3d3 calc(50% - 10px) 100%
   );
   background-size: 275% 100%;
   background-position: ${({ active }) => (active ? "100% 50%" : "0% 50%")};

@@ -1,6 +1,6 @@
 const standard = {
   color: {
-    react: "#61dafb"
+    react: "#10a8c8"
   },
 
   surface: {
