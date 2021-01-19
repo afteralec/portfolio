@@ -1,21 +1,27 @@
 import { useState } from "react";
 import styled from "styled-components";
+import { ThemeProvider as StyledThemeProvider } from "styled-components";
+
+// Import services
+import { standard } from "./services/themes";
 
 export default function App() {
-  const [transition, setTransition] = useState(false);
+  const [theme] = useState(standard);
+  const [react, setReact] = useState(false);
 
   return (
-    <Root transition={transition}>
-      <TransitionText transition={transition}>Test</TransitionText>
-      <TestText
-        onClick={() => {
-          setTransition((transition) => !transition);
-        }}
-        transition={transition}
-      >
-        Test
-      </TestText>
-    </Root>
+    <StyledThemeProvider theme={theme}>
+      <Root transition={react}>
+        <Navigation>
+          <NodeLink onClick={() => setReact(false)} active={!react}>
+            About
+          </NodeLink>
+          <ReactLink onClick={() => setReact(true)} active={react}>
+            Projects
+          </ReactLink>
+        </Navigation>
+      </Root>
+    </StyledThemeProvider>
   );
 }
 
@@ -29,9 +35,9 @@ const Root = styled.div`
 
   background: linear-gradient(
     -45deg,
-    #ef5350 0 calc(50% + 10px),
-    indigo calc(50%) calc(50%),
-    indigo calc(50% - 10px) 100%
+    #ffffff 0 calc(50% + 10px),
+    ${({ theme }) => theme.surface.react} calc(50%) calc(50%),
+    ${({ theme }) => theme.surface.react} calc(50% - 10px) 100%
   );
   background-size: 275% 100%;
   background-position: ${({ transition }) =>
@@ -40,18 +46,31 @@ const Root = styled.div`
   transition: 0.75s all;
 `;
 
-const TransitionText = styled.p`
-  text-align: center;
-  font-size: 10rem;
+const Navigation = styled.div`
+  height: 8rem;
+  display: flex;
+  justify-content: center;
+`;
+
+const NavLink = styled.p`
+  font-size: ${({ active }) => (active ? "5rem" : "4rem")};
+  cursor: pointer;
+  margin-top: auto;
+`;
+
+const ReactLink = styled(NavLink)`
   background-image: linear-gradient(
     -45deg,
-    transparent 0 calc(50% + 10px),
-    transparent calc(50%) calc(50%),
-    #ef5350 calc(50% - 10px) 100%
+    ${({ theme }) => theme.surface.react} 0 calc(50% + 10px),
+    ${({ theme }) => theme.surface.react} calc(50%) calc(50%),
+    #61dafb calc(50% - 10px) 100%
   );
   background-size: 275% 100%;
-  background-position: ${({ transition }) =>
-    transition ? "0% 50%" : "100% 50%"};
+  background-position: ${({ active }) => (active ? "0% 50%" : "100% 50%")};
+
+  &:hover {
+    background-position: ${({ active }) => !active && "0% 50%"};
+  }
 
   transition: 0.75s all;
 
@@ -65,18 +84,19 @@ const TransitionText = styled.p`
   -o-text-fill-color: transparent;
 `;
 
-const TestText = styled.p`
-  text-align: center;
-  font-size: 10rem;
+const NodeLink = styled(NavLink)`
   background-image: linear-gradient(
     -45deg,
-    #000000 0 calc(50% + 10px),
-    #000000 calc(50%) calc(50%),
+    #39874e 0 calc(50% + 10px),
+    #ffffff calc(50%) calc(50%),
     #ffffff calc(50% - 10px) 100%
   );
   background-size: 275% 100%;
-  background-position: ${({ transition }) =>
-    transition ? "0% 50%" : "100% 50%"};
+  background-position: ${({ active }) => (active ? "100% 50%" : "0% 50%")};
+
+  &:hover {
+    background-position: ${({ active }) => !active && "100% 50%"};
+  }
 
   transition: 0.75s all;
 
