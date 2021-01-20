@@ -15,7 +15,7 @@ export default function App() {
     <ThemeProvider theme={theme}>
       <Root nav={nav}>
         <Navigation>
-          <div style={{ flexGrow: 3 - nav, transition: "0.75s all" }} />
+          <div style={{ flexGrow: 3.5 - nav, transition: "0.75s all" }} />
           <AboutLink onClick={() => setNav(0)} active={nav === 0}>
             About
           </AboutLink>
@@ -25,7 +25,7 @@ export default function App() {
           <ContactLink onClick={() => setNav(2)} active={nav === 2}>
             Contact
           </ContactLink>
-          <div style={{ flexGrow: 1 + nav, transition: "0.75s all" }} />
+          <div style={{ flexGrow: 1.5 + nav * 1.2, transition: "0.75s all" }} />
         </Navigation>
       </Root>
     </ThemeProvider>
