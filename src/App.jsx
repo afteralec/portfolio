@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { ThemeProvider as StyledThemeProvider } from "styled-components";
+import { ThemeProvider } from "styled-components";
 
 // Import services
 import { standard } from "./services/themes";
@@ -9,21 +9,26 @@ import { standard } from "./services/themes";
 
 export default function App() {
   const [theme] = useState(standard);
-  const [react, setReact] = useState(false);
+  const [nav, setNav] = useState(1);
 
   return (
-    <StyledThemeProvider theme={theme}>
-      <Root transition={react}>
+    <ThemeProvider theme={theme}>
+      <Root nav={nav}>
         <Navigation>
-          <NodeLink onClick={() => setReact(false)} active={!react}>
+          <div style={{ flexGrow: 3 - nav, transition: "0.75s all" }} />
+          <AboutLink onClick={() => setNav(0)} active={nav === 0}>
             About
-          </NodeLink>
-          <ReactLink onClick={() => setReact(true)} active={react}>
+          </AboutLink>
+          <ProjectsLink onClick={() => setNav(1)} active={nav === 1}>
             Projects
-          </ReactLink>
+          </ProjectsLink>
+          <ContactLink onClick={() => setNav(2)} active={nav === 2}>
+            Contact
+          </ContactLink>
+          <div style={{ flexGrow: 1 + nav, transition: "0.75s all" }} />
         </Navigation>
       </Root>
-    </StyledThemeProvider>
+    </ThemeProvider>
   );
 }
 
@@ -42,8 +47,7 @@ const Root = styled.div`
     ${({ theme }) => theme.surface.react} calc(50% - 10px) 100%
   );
   background-size: 275% 100%;
-  background-position: ${({ transition }) =>
-    transition ? "0% 50%" : "100% 50%"};
+  background-position: ${({ nav }) => (nav ? "0% 50%" : "100% 50%")};
 
   transition: 0.75s all;
 `;
@@ -58,9 +62,11 @@ const NavLink = styled.p`
   font-size: ${({ active }) => (active ? "5rem" : "4rem")};
   cursor: pointer;
   margin-top: auto;
+
+  transition: 0.75s all;
 `;
 
-const ReactLink = styled(NavLink)`
+const ProjectsLink = styled(NavLink)`
   background-image: linear-gradient(
     -45deg,
     ${({ theme }) => theme.surface.react} 0 calc(50% + 10px),
@@ -73,8 +79,6 @@ const ReactLink = styled(NavLink)`
   &:hover {
     background-position: ${({ active }) => !active && "0% 50%"};
   }
-
-  transition: 0.75s all;
 
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -89,7 +93,7 @@ const ReactLink = styled(NavLink)`
 // #cc9933 // goldenrod
 // #976b00 // dark goldenrod
 
-const NodeLink = styled(NavLink)`
+const AboutLink = styled(NavLink)`
   background-image: linear-gradient(
     -45deg,
     #cc9933 0 calc(50% + 10px),
@@ -103,8 +107,6 @@ const NodeLink = styled(NavLink)`
     background-position: ${({ active }) => !active && "100% 50%"};
   }
 
-  transition: 0.75s all;
-
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   -moz-background-clip: text;
@@ -114,3 +116,5 @@ const NodeLink = styled(NavLink)`
   -o-background-clip: text;
   -o-text-fill-color: transparent;
 `;
+
+const ContactLink = styled(NavLink)``;
