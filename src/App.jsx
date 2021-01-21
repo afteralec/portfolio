@@ -15,7 +15,7 @@ export default function App() {
     <ThemeProvider theme={theme}>
       <Root nav={nav}>
         <Navigation>
-          <div style={{ flexGrow: 3.5 - nav, transition: "0.75s all" }} />
+          <NavigationBufferLeft nav={nav} />
           <AboutLink onClick={() => setNav(0)} active={nav === 0}>
             About
           </AboutLink>
@@ -25,7 +25,7 @@ export default function App() {
           <ContactLink onClick={() => setNav(2)} active={nav === 2}>
             Contact
           </ContactLink>
-          <div style={{ flexGrow: 1.5 + nav * 1.2, transition: "0.75s all" }} />
+          <NavigationBufferRight nav={nav} />
         </Navigation>
       </Root>
     </ThemeProvider>
@@ -58,10 +58,22 @@ const Navigation = styled.div`
   justify-content: center;
 `;
 
+const NavigationBufferLeft = styled.div`
+  flex-grow: ${({ nav }) => 3.5 - nav};
+  transition: 0.75s all;
+`;
+
+const NavigationBufferRight = styled.div`
+  flex-grow: ${({ nav }) => 1.5 + nav * 1.2};
+  transition: 0.75s all;
+`;
+
 const NavLink = styled.p`
   font-size: ${({ active }) => (active ? "5rem" : "4rem")};
   cursor: pointer;
   margin-top: auto;
+  margin-left: 1rem;
+  margin-right: 1rem;
 
   transition: 0.75s all;
 `;
@@ -117,4 +129,26 @@ const AboutLink = styled(NavLink)`
   -o-text-fill-color: transparent;
 `;
 
-const ContactLink = styled(NavLink)``;
+const ContactLink = styled(NavLink)`
+  background-image: linear-gradient(
+    -45deg,
+    #cc9933 0 calc(50% + 10px),
+    #d3d3d3 calc(50%) calc(50%),
+    #d3d3d3 calc(50% - 10px) 100%
+  );
+  background-size: 275% 100%;
+  background-position: ${({ active }) => (active ? "100% 50%" : "0% 50%")};
+
+  &:hover {
+    background-position: ${({ active }) => !active && "100% 50%"};
+  }
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
+  -ms-background-clip: text;
+  -ms-text-fill-color: transparent;
+  -o-background-clip: text;
+  -o-text-fill-color: transparent;
+`;
